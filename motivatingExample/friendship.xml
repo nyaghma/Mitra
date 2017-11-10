@@ -1,0 +1,42 @@
+<Users>
+        <U id="1" name="navid">
+                <Friends>
+                	<F>
+                		<fid>2</fid>
+                		<year>3</year>
+                	</F>
+                	<F>
+                		<fid>4</fid>
+                		<year>4</year>
+                	</F>
+                </Friends>
+        </U>
+        <U id="2" name="isil">
+                <Friends>
+                	<F>
+                		<fid>3</fid>
+                		<year>2</year>
+                	</F>
+                	<F>
+                		<fid>1</fid>
+                		<year>3</year>
+                	</F>
+                </Friends>                
+        </U>
+        <U id="3" name="kostas">
+                <Friends>
+                	<F>
+                		<fid>2</fid>
+                		<year>2</year>
+                	</F>
+                </Friends>               
+        </U>
+        <U id="4" name="yu">
+                <Friends>
+                	<F>
+                		<fid>1</fid>
+                		<year>4</year>
+                	</F>
+                </Friends>               
+        </U>
+</Users>

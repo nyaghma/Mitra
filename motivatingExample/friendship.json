@@ -1,0 +1,52 @@
+{
+	"User": [
+		 {
+			"id": 1,
+			"name": "navid",
+			"Friend": [
+				   {
+					"fid": 2,
+					"years": 3 
+				   }, 
+				   {
+					"fid": 4,
+					"years": 4
+				   }
+			]
+		 },
+		 { 
+			"id": 2,
+			"name": "isil",
+			"Friend": [
+				   {
+					"fid": 3,
+					"years": 2 
+				   }, 
+				   {
+					"fid": 1,
+					"years": 3
+				   }
+			]
+		 },
+		 {
+			"id": 3,
+			"name": "kostas",
+			"Friend": [
+				   {
+					"fid": 2,
+					"years": 2 
+				   }
+			]
+		 },
+		 {
+			"id": 4,
+			"name": "yu",
+			"Friend": [
+				   {
+					"fid": 1,
+					"years": 4 
+				   }
+			]
+		 }
+	]
+}  

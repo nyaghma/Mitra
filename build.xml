@@ -1,0 +1,123 @@
+<?xml version="1.0"?>
+<project name="Mitra" default="run" basedir=".">
+	<property name="src.dir" value="${basedir}/src"/>
+	<property name="build.dir" value="${basedir}/bin"/>
+	<property name="lib.dir" value="${basedir}/lib"/>
+	<property name="test.dir" value="${basedir}/test"/>
+	<property environment="env"/>
+					  
+	<target name="clean" description="clean the .class and .jar output files">
+		<delete>
+			<fileset dir="${build.dir}">
+				<include name="**/*.class"/>
+				<include name="**/*.jar"/>
+				<include name="**/*.js"/>
+				<include name="**/*.xsl"/>
+			</fileset>
+			<fileset dir="${test.dir}">
+				<include name="**/TEST-*.txt"/>
+			</fileset>
+		</delete>
+	</target>
+
+	<path id="classpath">
+		<fileset dir="${lib.dir}">
+			<include name="*.jar"/>
+		</fileset>
+		<pathelement path="${build.dir}"/>
+	</path>
+
+	<target name="compile" description="compile the source files">
+		<mkdir dir="${build.dir}"/>
+		<javac destdir="${build.dir}" source="1.8" target="1.8" debug="true"
+			deprecation="false" optimize="false" failonerror="true"
+			includeantruntime="false">
+			<src path="${src.dir}"/>
+			<classpath refid="classpath"/>
+		</javac>
+	</target>
+
+	<target name="compile.test" description="compile the source and test files"
+		depends="compile">
+		<mkdir dir="${build.dir}"/>
+		<javac destdir="${build.dir}" source="1.8" target="1.8" debug="true"
+			deprecation="false" optimize="false" failonerror="true"
+			includeantruntime="false">
+			<src path="${test.dir}"/>
+			<classpath refid="classpath"/>
+		</javac>
+	</target>
+
+	<target name="build-jar" depends="compile">
+		<jar destfile="${build.dir}/mitra/mitra.jar"
+			basedir="${build.dir}"
+			includes="mitra/**"
+			excludes="**/*Test.class">
+
+			<manifest>
+				<attribute name="Main-Class" value="mitra.Synthesizer"/>
+			</manifest>
+
+		</jar>
+	</target>
+
+	<target name="run" depends="compile">
+		<java classname="mitra.Synthesizer" fork="true">
+			<env key="LD_LIBRARY_PATH" value="${lib.dir}"/>
+			<sysproperty key="java.library.path" path="${lib.dir}:/usr/local/lib:/Library/Java/Extensions"/>
+			<classpath refid="classpath"/>
+			<arg value="-e"/>
+			<arg value="motivatingExample/friendship.xml"/>
+			<arg value="motivatingExample/friendship.csv"/>
+			<arg value="-o"/>
+			<arg value="motivatingExample/friendship.xsl"/>
+		</java>
+	</target>
+
+	<target name="run-xslt">
+		<java jar="lib/saxon/saxon9he.jar" fork="true">
+			<arg value="-s:${xslt.source}"/>
+			<arg value="-xsl:${xslt.program}"/>
+			<arg value="-o:${xslt.output}"/>
+		</java>
+	</target>
+
+	<target name="run-json-translator-test" depends="compile">
+		<java classname="mitra.JSONTranslator" fork="true">
+			<env key="LD_LIBRARY_PATH" value="${lib.dir}"/>
+			<sysproperty key="java.library.path" path="${lib.dir}:/usr/local/lib:/Library/Java/Extensions"/>
+			<classpath refid="classpath"/>
+		</java>
+	</target>
+
+	<target name="run-xml-translator-test" depends="compile">
+		<java classname="mitra.XMLTranslator" fork="true">
+			<env key="LD_LIBRARY_PATH" value="${lib.dir}"/>
+			<sysproperty key="java.library.path" path="${lib.dir}:/usr/local/lib:/Library/Java/Extensions"/>
+			<classpath refid="classpath"/>
+		</java>
+	</target>
+
+	<target name="test" depends="compile.test">
+		<junit fork="true" printsummary="on">
+			<env key="LD_LIBRARY_PATH" value="${lib.dir}"/>
+			<sysproperty key="java.library.path" path="${lib.dir}"/>
+			<classpath>
+				<path refid="classpath"/>
+				<pathelement location="${build.dir}"/>
+			</classpath>
+			<batchtest>
+				<fileset dir="${test.dir}" includes="**/*Test.java" />
+			</batchtest>
+			<formatter type="plain"/>
+		</junit>
+		<move todir="${test.dir}/mitra/out">
+			<fileset dir="${basedir}">
+				<include name="TEST-*.txt"/>
+			</fileset>
+		</move>
+		<echo message="Test output located in ${test.dir}/mitra/out"/>
+	</target>
+
+
+</project>
