@@ -1,0 +1,14 @@
+# Running Synthesized Programs
+
+## JSON/Javascript
+After running Mitra on a JSON input/output example, the user-specified output JS file will contain a function named `extractTuplesFromTree(tree)`. This function takes an object (the desired tree from which to extract tuples) as input and produces a list of lists (the tuples extracted from the tree).
+    
+To run this function, run it as you would any code in the browser, by including the file in the HTML and calling the function where it is needed. To run itf from the command line, you can use NodeJS or a similar tool, including both the file with the function and the file with the desired input tree.
+    
+## XML/XSLT
+After running Mitra on an XSL input/output example, the user-specified output XSL file will contain a ready-to-run transformation program. 
+    
+To run the transformation, use Saxon or some similar XSLT tool that supports XSL 3.0 and the output will be a CSV file with the tuples extracted from the input XML.
+    
+Using Saxon HE, the command would be:
+    ```java -jar path/to/saxon.jar -s:<your XML input file>.xml -xsl:<your XSLT file>.xsl -o:<desired output file>.csv```
